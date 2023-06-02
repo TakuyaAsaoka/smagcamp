@@ -9,9 +9,7 @@ import { UserRegistration } from './components/UserRegistration';
 
 function App() {
   const [view, setView] = useState('Login');
-  const pageChange = (name) => {
-    setView(name);
-  };
+  const pageChange = (name) => setView(name);
   const [completeItem, setCompleteItem] = useState([]);
   const [allItems, setAllItem] = useState([]);
   const [putBringItem, setPutBringItem] = useState([]);
@@ -20,7 +18,7 @@ function App() {
     { name: 'いす', isComp: false },
     { name: '焚き火台', isComp: false },
   ]);
-  const [preparationList, setPreparationList] = useState(BringItem);
+  // const [preparationList, setPreparationList] = useState(BringItem);
 
   // ユーザーがログイン済みか判定
   useEffect(() => {
@@ -47,6 +45,9 @@ function App() {
       console.error('error');
     }
   };
+
+  console.log('App-putBringItem', putBringItem);
+
   useEffect(() => {
     fetchItem();
     fetchBringItem();
@@ -70,10 +71,10 @@ function App() {
     }
   };
 
-  const getPreparationList = () => {
-    console.log('BringItem', BringItem);
-    setPreparationList(BringItem.map((elm) => elm.filter((elm2) => !elm2.isComp)));
-  };
+  // const getPreparationList = () => {
+  //   console.log('BringItem', BringItem);
+  //   setPreparationList(BringItem.map((elm) => elm.filter((elm2) => !elm2.isComp)));
+  // };
 
   // 確認用ログ出力
   useEffect(() => {
@@ -106,7 +107,7 @@ function App() {
               setAllItem={setAllItem}
               putBringItem={putBringItem}
               setPutBringItem={setPutBringItem}
-              getPreparationList={getPreparationList}
+              // getPreparationList={getPreparationList}
             />
           </div>
         );
@@ -124,13 +125,11 @@ function App() {
               pageChange={pageChange}
               BringItem={BringItem}
               setBringItem={setBringItem}
-              completeItem={completeItem}
-              setCompleteItem={setCompleteItem}
               putBringItem={putBringItem}
               setPutBringItem={setPutBringItem}
-              preparationList={preparationList}
-              setPreparationList={setPreparationList}
-              getPreparationList={getPreparationList}
+              // preparationList={preparationList}
+              // setPreparationList={setPreparationList}
+              // getPreparationList={getPreparationList}
             />
           </div>
         );
@@ -140,15 +139,13 @@ function App() {
             <CompleteList
               view={view}
               pageChange={pageChange}
-              completeItem={completeItem}
-              setCompleteItem={setCompleteItem}
               BringItem={BringItem}
               setBringItem={setBringItem}
               putBringItem={putBringItem}
               setPutBringItem={setPutBringItem}
-              preparationList={preparationList}
-              setPreparationList={setPreparationList}
-              getPreparationList={getPreparationList}
+              // preparationList={preparationList}
+              // setPreparationList={setPreparationList}
+              // getPreparationList={getPreparationList}
             />
           </div>
         );

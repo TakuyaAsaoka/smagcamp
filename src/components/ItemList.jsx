@@ -3,29 +3,22 @@ import campImg from '../image/campIcon.svg';
 import picture from '../image/picture.svg';
 
 export const ItemList = (props) => {
+  const { putBringItem, setPutBringItem } = props;
   let user = localStorage.getItem('user');
   const logout = () => {
     props.pageChange('Login');
     localStorage.removeItem('user');
   };
   const isBringChange = (e) => {
-    let putItem = props.putBringItem;
-    console.log(putItem);
     const targetId = Number(e.target.id);
     let targetCheck = e.target.checked;
-    console.log(targetCheck);
     if (e.target.closest('label').className === 'toggle-button-002') {
-      targetCheck = targetCheck ? false : true;
+      targetCheck = !targetCheck;
     }
-
-    let result = putItem.map((el) => {
-      if (el.id === targetId) {
-        return { ...el, isBring: targetCheck };
-      } else {
-        return el;
-      }
+    const result = putBringItem.map((el) => {
+      return el.id === targetId ? { ...el, isBring: targetCheck } : el;
     });
-    props.setPutBringItem(result);
+    setPutBringItem(result);
   };
 
   const showTable = (e) => {
@@ -40,7 +33,7 @@ export const ItemList = (props) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(props.putBringItem),
+        body: JSON.stringify(putBringItem),
       });
       const result = await res.text();
       console.log(result);
@@ -51,6 +44,9 @@ export const ItemList = (props) => {
 
   return (
     <>
+      {/* <label className="toggle-button-002">
+        <input type="checkbox" className="allItemBringCheck"></input>
+      </label> */}
       <div className="headerBrock">
         <p>Welcome {user}</p>
         <button className="btn logOutBtn" onClick={logout}>
@@ -91,10 +87,7 @@ export const ItemList = (props) => {
                         </td>
                         <td align="center">
                           <label
-                            // className={"toggle-button-001"}
-                            className={
-                              el2.isBring === false ? 'toggle-button-001' : 'toggle-button-002'
-                            }
+                            className={!el2.isBring ? 'toggle-button-001' : 'toggle-button-002'}
                           >
                             <input
                               id={el2.id}
@@ -123,8 +116,8 @@ export const ItemList = (props) => {
           className="campImg"
           onClick={() => {
             props.pageChange('BringList');
-            props.getPreparationList();
-            console.log('preparationList:', props.preparationList);
+            // props.getPreparationList();
+            // console.log('preparationList:', props.preparationList);
             putBringList();
           }}
         ></img>

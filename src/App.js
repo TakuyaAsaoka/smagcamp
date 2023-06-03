@@ -10,15 +10,13 @@ import { UserRegistration } from './components/UserRegistration';
 function App() {
   const [view, setView] = useState('Login');
   const pageChange = (name) => setView(name);
-  const [completeItem, setCompleteItem] = useState([]);
   const [allItems, setAllItem] = useState([]);
   const [putBringItem, setPutBringItem] = useState([]);
-  const [BringItem, setBringItem] = useState([
+  const [bringItem, setBringItem] = useState([
     { name: 'テント', isComp: false },
     { name: 'いす', isComp: false },
     { name: '焚き火台', isComp: false },
   ]);
-  // const [preparationList, setPreparationList] = useState(BringItem);
 
   // ユーザーがログイン済みか判定
   useEffect(() => {
@@ -40,19 +38,14 @@ function App() {
           return { id: el.id, isBring: el.isBring, isComp: el.isComp };
         })
       );
-      // console.log(allItems);
     } catch (error) {
       console.error('error');
     }
   };
 
-  console.log('App-putBringItem', putBringItem);
-
   useEffect(() => {
     fetchItem();
-    fetchBringItem();
-    // console.log(BringItem)
-    // setPreparationList(BringItem.map((elm) => elm.filter((elm2) => !elm2.isComp)));
+    fetchBringItem(); // ページ遷移後のfetchなので意味ないかも？
   }, [view]); //ここに、allItemsが設定されていたことが問題だった！
 
   // Bringアイテム取得
@@ -60,7 +53,6 @@ function App() {
     try {
       const res = await fetch('http://localhost:8080/bringItems');
       const data = await res.json();
-      // console.log(data);
       const gearItem = data.filter((el) => el.categoryName_id === '1');
       const ingredientsItem = data.filter((el) => el.categoryName_id === '2');
       const kitchenwareItem = data.filter((el) => el.categoryName_id === '3');
@@ -71,17 +63,11 @@ function App() {
     }
   };
 
-  // const getPreparationList = () => {
-  //   console.log('BringItem', BringItem);
-  //   setPreparationList(BringItem.map((elm) => elm.filter((elm2) => !elm2.isComp)));
-  // };
-
   // 確認用ログ出力
-  useEffect(() => {
-    console.log('view :', view);
-    console.log('bringItem :', BringItem);
-    // console.log(putBringItem);
-  }, [view, BringItem]);
+  // useEffect(() => {
+  //   console.log('view :', view);
+  //   console.log('bringItem :', bringItem);
+  // }, [view, bringItem]);
 
   const displayView = () => {
     switch (view) {
@@ -101,13 +87,11 @@ function App() {
         return (
           <div>
             <ItemList
-              view={view}
+              fetchBringItem={fetchBringItem}
               pageChange={pageChange}
               allItems={allItems}
-              setAllItem={setAllItem}
               putBringItem={putBringItem}
               setPutBringItem={setPutBringItem}
-              // getPreparationList={getPreparationList}
             />
           </div>
         );
@@ -121,15 +105,11 @@ function App() {
         return (
           <div>
             <BringList
-              view={view}
               pageChange={pageChange}
-              BringItem={BringItem}
+              bringItem={bringItem}
               setBringItem={setBringItem}
               putBringItem={putBringItem}
               setPutBringItem={setPutBringItem}
-              // preparationList={preparationList}
-              // setPreparationList={setPreparationList}
-              // getPreparationList={getPreparationList}
             />
           </div>
         );
@@ -137,15 +117,11 @@ function App() {
         return (
           <div>
             <CompleteList
-              view={view}
               pageChange={pageChange}
-              BringItem={BringItem}
+              bringItem={bringItem}
               setBringItem={setBringItem}
               putBringItem={putBringItem}
               setPutBringItem={setPutBringItem}
-              // preparationList={preparationList}
-              // setPreparationList={setPreparationList}
-              // getPreparationList={getPreparationList}
             />
           </div>
         );

@@ -88,7 +88,7 @@ app.put('/changeBringItems', async (req, res) => {
 
 // itemTblのisBring＝Trueのアイテムを全て取得するAPI
 app.get('/bringItems', async (req, res) => {
-  const allItems = await function () {
+  const allItems = () => {
     return knex
       .select({
         id: 'id',
@@ -103,7 +103,6 @@ app.get('/bringItems', async (req, res) => {
       .from('itemTbl');
   };
   const result = await allItems();
-  // console.log("result:", result);
   res.send(result);
 });
 

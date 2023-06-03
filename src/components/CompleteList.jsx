@@ -2,10 +2,10 @@ import React, { useRef } from 'react';
 import picture from '../image/picture.svg';
 
 export const CompleteList = (props) => {
-  const refBringItem = useRef(props.BringItem);
-  const refPutBringItem = useRef(props.putBringItem);
-  console.log('Complete-propsPutBringItem', props.putBringItem);
-  console.log('Complete-refPutBringItem', refPutBringItem.current);
+  const { pageChange, bringItem, setBringItem, putBringItem, setPutBringItem } = props;
+
+  const refBringItem = useRef(bringItem);
+  const refPutBringItem = useRef(putBringItem);
 
   const showTable = (e) => {
     const targetTable = e.target.nextElementSibling;
@@ -25,7 +25,6 @@ export const CompleteList = (props) => {
         : el
     );
     refBringItem.current = updatedBringItem;
-    // props.setBringItem(updatedBringItem);
   };
 
   const isCompChange = (e) => {
@@ -37,14 +36,12 @@ export const CompleteList = (props) => {
       return el.id === targetId ? { ...el, isComp: targetCheck } : el;
     });
     refPutBringItem.current = result;
-    // props.setPutBringItem(result);
   };
 
   const putCompleteList = async () => {
     try {
-      props.setBringItem(refBringItem.current);
-      props.setPutBringItem(refPutBringItem.current);
-      console.log('fetch前refPutBringItem', refPutBringItem.current);
+      setBringItem(refBringItem.current);
+      setPutBringItem(refPutBringItem.current);
       const res = await fetch('http://localhost:8080/changeCompItems', {
         method: 'PUT',
         headers: {
@@ -60,11 +57,12 @@ export const CompleteList = (props) => {
   };
 
   const allFalse = () => {
-    props.setBringItem((prevState) =>
-      prevState.map((obj) => {
-        return { name: obj.name, checked: false };
-      })
+    refBringItem.current = refBringItem.current.map((elm1) =>
+      elm1.map((elm2) => ({ ...elm2, isComp: false }))
     );
+    refPutBringItem.current = refPutBringItem.current.map((elm) => ({ ...elm, isComp: false }));
+    setBringItem(refBringItem.current);
+    setPutBringItem(refPutBringItem.current);
   };
 
   return (
@@ -134,10 +132,8 @@ export const CompleteList = (props) => {
         <button
           className="btn choiceLiftBtn"
           onClick={() => {
-            props.pageChange('BringList');
-            // props.getPreparationList();
-            // console.log('preparationList:', props.preparationList);
             putCompleteList();
+            pageChange('BringList');
           }}
         >
           戻る

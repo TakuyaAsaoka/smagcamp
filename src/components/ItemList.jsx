@@ -3,12 +3,14 @@ import campImg from '../image/campIcon.svg';
 import picture from '../image/picture.svg';
 
 export const ItemList = (props) => {
-  const { putBringItem, setPutBringItem } = props;
+  const { fetchBringItem, pageChange, allItems, putBringItem, setPutBringItem } = props;
   let user = localStorage.getItem('user');
+
   const logout = () => {
-    props.pageChange('Login');
+    pageChange('Login');
     localStorage.removeItem('user');
   };
+
   const isBringChange = (e) => {
     const targetId = Number(e.target.id);
     let targetCheck = e.target.checked;
@@ -44,9 +46,6 @@ export const ItemList = (props) => {
 
   return (
     <>
-      {/* <label className="toggle-button-002">
-        <input type="checkbox" className="allItemBringCheck"></input>
-      </label> */}
       <div className="headerBrock">
         <p>Welcome {user}</p>
         <button className="btn logOutBtn" onClick={logout}>
@@ -54,7 +53,7 @@ export const ItemList = (props) => {
         </button>
       </div>
       <div className="mainBrock">
-        {props.allItems.map(
+        {allItems.map(
           (el, index) =>
             el.length !== 0 && (
               <React.Fragment key={index}>
@@ -107,18 +106,17 @@ export const ItemList = (props) => {
       </div>
       <div className="bottomBrock">
         <button className="btn liftBtn">全解除</button>
-        <button onClick={() => props.pageChange('ItemRegistration')} className="btn">
+        <button onClick={() => pageChange('ItemRegistration')} className="btn">
           アイテム追加
         </button>
         <img
           src={campImg}
           alt="campImage"
           className="campImg"
-          onClick={() => {
-            props.pageChange('BringList');
-            // props.getPreparationList();
-            // console.log('preparationList:', props.preparationList);
-            putBringList();
+          onClick={async () => {
+            await putBringList();
+            await fetchBringItem(); // ページ遷移前にbringItem更新しないと変更が反映されない
+            pageChange('BringList');
           }}
         ></img>
       </div>

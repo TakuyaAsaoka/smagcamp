@@ -2,8 +2,11 @@ import React, { useRef } from 'react';
 import picture from '../image/picture.svg';
 
 export const BringList = (props) => {
-  const refBringItem = useRef(props.BringItem);
-  const refPutBringItem = useRef(props.putBringItem);
+  const { pageChange, bringItem, setBringItem, putBringItem, setPutBringItem } = props;
+
+  const refBringItem = useRef(bringItem);
+  const refPutBringItem = useRef(putBringItem);
+  // console.log('Bring-bringItem', bringItem);
 
   const removeBringItem = (e) => {
     const targetName = e.target.closest('td').previousElementSibling.firstElementChild;
@@ -18,7 +21,6 @@ export const BringList = (props) => {
         : el
     );
     refBringItem.current = updatedBringItem;
-    // props.setBringItem(updatedBringItem);
   };
 
   const showTable = (e) => {
@@ -27,27 +29,19 @@ export const BringList = (props) => {
   };
 
   const isCompChange = (e) => {
-    let putItem = refPutBringItem.current;
-    console.log('putItem', putItem);
     const targetId = Number(e.target.id);
     let targetCheck = e.target.checked;
     if (e.target.closest('label').className === 'toggle-button-002') targetCheck = !targetCheck;
-    let result = putItem.map((el) => {
-      if (el.id === targetId) {
-        return { ...el, isComp: targetCheck };
-      } else {
-        return el;
-      }
+    let result = refPutBringItem.current.map((el) => {
+      return el.id === targetId ? { ...el, isComp: targetCheck } : el;
     });
-    console.log('result', result);
     refPutBringItem.current = result;
-    // props.setPutBringItem(result);
   };
 
   const putCompleteList = async () => {
     try {
-      props.setBringItem(refBringItem.current);
-      props.setPutBringItem(refPutBringItem.current);
+      setBringItem(refBringItem.current);
+      setPutBringItem(refPutBringItem.current);
       const res = await fetch('http://localhost:8080/changeCompItems', {
         method: 'PUT',
         headers: {
@@ -129,13 +123,13 @@ export const BringList = (props) => {
       <div className="bottomBrock">
         <button
           onClick={() => {
-            props.pageChange('CompleteList');
+            pageChange('CompleteList');
             putCompleteList();
           }}
         >
           完了済アイテム
         </button>
-        <button onClick={() => props.pageChange('ItemList')}>戻る</button>
+        <button onClick={() => pageChange('ItemList')}>戻る</button>
       </div>
     </>
   );

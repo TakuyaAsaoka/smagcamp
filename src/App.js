@@ -10,7 +10,7 @@ import { UserRegistration } from './components/UserRegistration';
 function App() {
   const fetchServer = process.env.DB_URL ?? 'http://localhost:8080';
 
-  const [view, setView] = useState('Login');
+  const [view, setView] = useState('ItemList');
   const pageChange = (name) => setView(name);
   const [allItems, setAllItem] = useState([]);
   const [putBringItem, setPutBringItem] = useState([]);

@@ -8,6 +8,8 @@ import { Login } from './components/Login';
 import { UserRegistration } from './components/UserRegistration';
 
 function App() {
+  const fetchServer = process.env.DB_URL ?? 'http://localhost:8080';
+
   const [view, setView] = useState('Login');
   const pageChange = (name) => setView(name);
   const [allItems, setAllItem] = useState([]);
@@ -26,7 +28,7 @@ function App() {
   // 全アイテム取得
   const fetchItem = async () => {
     try {
-      const res = await fetch('http://localhost:8080/allItems');
+      const res = await fetch(`${fetchServer}/allItems`);
       const data = await res.json();
       const gearItem = data.filter((el) => el.categoryName_id === '1');
       const ingredientsItem = data.filter((el) => el.categoryName_id === '2');
@@ -51,7 +53,7 @@ function App() {
   // Bringアイテム取得
   const fetchBringItem = async () => {
     try {
-      const res = await fetch('http://localhost:8080/bringItems');
+      const res = await fetch(`${fetchServer}/bringItems`);
       const data = await res.json();
       const gearItem = data.filter((el) => el.categoryName_id === '1');
       const ingredientsItem = data.filter((el) => el.categoryName_id === '2');
@@ -87,6 +89,7 @@ function App() {
         return (
           <div>
             <ItemList
+              fetchServer={fetchServer}
               fetchBringItem={fetchBringItem}
               pageChange={pageChange}
               allItems={allItems}
@@ -105,6 +108,7 @@ function App() {
         return (
           <div>
             <BringList
+              fetchServer={fetchServer}
               pageChange={pageChange}
               bringItem={bringItem}
               setBringItem={setBringItem}
@@ -117,6 +121,7 @@ function App() {
         return (
           <div>
             <CompleteList
+              fetchServer={fetchServer}
               pageChange={pageChange}
               bringItem={bringItem}
               setBringItem={setBringItem}

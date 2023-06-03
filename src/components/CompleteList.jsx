@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import picture from '../image/picture.svg';
 
 export const CompleteList = (props) => {
-  const { pageChange, bringItem, setBringItem, putBringItem, setPutBringItem } = props;
+  const { fetchServer, pageChange, bringItem, setBringItem, putBringItem, setPutBringItem } = props;
 
   const refBringItem = useRef(bringItem);
   const refPutBringItem = useRef(putBringItem);
@@ -42,7 +42,7 @@ export const CompleteList = (props) => {
     try {
       setBringItem(refBringItem.current);
       setPutBringItem(refPutBringItem.current);
-      const res = await fetch('http://localhost:8080/changeCompItems', {
+      const res = await fetch(`${fetchServer}/changeCompItems`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

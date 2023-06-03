@@ -2,11 +2,10 @@ import React, { useRef } from 'react';
 import picture from '../image/picture.svg';
 
 export const BringList = (props) => {
-  const { pageChange, bringItem, setBringItem, putBringItem, setPutBringItem } = props;
+  const { fetchServer, pageChange, bringItem, setBringItem, putBringItem, setPutBringItem } = props;
 
   const refBringItem = useRef(bringItem);
   const refPutBringItem = useRef(putBringItem);
-  // console.log('Bring-bringItem', bringItem);
 
   const removeBringItem = (e) => {
     const targetName = e.target.closest('td').previousElementSibling.firstElementChild;
@@ -42,7 +41,7 @@ export const BringList = (props) => {
     try {
       setBringItem(refBringItem.current);
       setPutBringItem(refPutBringItem.current);
-      const res = await fetch('http://localhost:8080/changeCompItems', {
+      const res = await fetch(`${fetchServer}/changeCompItems`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

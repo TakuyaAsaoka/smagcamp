@@ -3,7 +3,8 @@ import campImg from '../image/campIcon.svg';
 import picture from '../image/picture.svg';
 
 export const ItemList = (props) => {
-  const { fetchBringItem, pageChange, allItems, putBringItem, setPutBringItem } = props;
+  const { fetchServer, fetchBringItem, pageChange, allItems, putBringItem, setPutBringItem } =
+    props;
   let user = localStorage.getItem('user');
 
   const logout = () => {
@@ -30,7 +31,7 @@ export const ItemList = (props) => {
 
   const putBringList = async () => {
     try {
-      const res = await fetch('http://localhost:8080/changeBringItems', {
+      const res = await fetch(`${fetchServer}/changeBringItems`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

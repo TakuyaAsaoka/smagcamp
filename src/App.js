@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ItemRegistration } from './components/ItemRegistration';
 import { BringList } from './components/BringList';
 import { CompleteList } from './components/CompleteList';
-import { Login } from './components/Login';
+// import { Login } from './components/Login';
 import { UserRegistration } from './components/UserRegistration';
 
 function App() {
@@ -74,11 +74,7 @@ function App() {
   const displayView = () => {
     switch (view) {
       case 'Login':
-        return (
-          <div>
-            <Login view={view} pageChange={pageChange} />
-          </div>
-        );
+        return <div>{/* <Login view={view} pageChange={pageChange} /> */}</div>;
       case 'UserRegistration':
         return (
           <div>

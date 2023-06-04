@@ -9,11 +9,12 @@ import { UserRegistration } from './components/UserRegistration';
 import { production } from '../knexfile';
 
 function App() {
+  const fetchServer = 'https://sumgcampserver.onrender.com';
   // const fetchServer = process.env.SERVER_URL ?? 'http://localhost:8080';
-  const fetchServer =
-    process.env.NODE_ENV === 'production'
-      ? 'https://sumgcampserver.onrender.com'
-      : 'http://localhost:8080';
+  // const fetchServer =
+  //   process.env.NODE_ENV === 'production'
+  //     ? 'https://sumgcampserver.onrender.com'
+  //     : 'http://localhost:8080';
 
   const [view, setView] = useState('ItemList');
   const pageChange = (name) => setView(name);

@@ -8,7 +8,8 @@ import { CompleteList } from './components/CompleteList';
 import { UserRegistration } from './components/UserRegistration';
 
 function App() {
-  const fetchServer = process.env.SERVER_URL ?? 'http://localhost:8080';
+  // const fetchServer = process.env.SERVER_URL ?? 'http://localhost:8080';
+  const fetchServer = 'https://sumgcampserver.onrender.com';
 
   const [view, setView] = useState('ItemList');
   const pageChange = (name) => setView(name);
@@ -75,7 +76,7 @@ function App() {
   const displayView = () => {
     switch (view) {
       // case 'Login':
-      //   return <div>aaa{/* <Login view={view} pageChange={pageChange} /> */}</div>;
+      //   return <div>{/* <Login view={view} pageChange={pageChange} /> */}</div>;
       case 'UserRegistration':
         return (
           <div>

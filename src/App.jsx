@@ -8,8 +8,7 @@ import { CompleteList } from './components/CompleteList';
 import { UserRegistration } from './components/UserRegistration';
 
 function App() {
-  const fetchServer = 'https://sumgcampserver.onrender.com';
-  // const fetchServer = process.env.SERVER_URL ?? 'http://localhost:8080';
+  const fetchServer = process.env.SERVER_URL ?? 'http://localhost:8080';
 
   const [view, setView] = useState('ItemList');
   const pageChange = (name) => setView(name);
@@ -22,10 +21,11 @@ function App() {
   ]);
 
   // ユーザーがログイン済みか判定
-  useEffect(() => {
-    const user = localStorage.getItem('user');
-    user ? setView('ItemList') : setView('Login');
-  }, []);
+  // useEffect(() => {
+  //   const user = localStorage.getItem('user');
+  //   user ? setView('ItemList') : setView('Login');
+  // }, []);
+
   // 全アイテム取得
   const fetchItem = async () => {
     try {
@@ -74,8 +74,8 @@ function App() {
 
   const displayView = () => {
     switch (view) {
-      case 'Login':
-        return <div>{/* <Login view={view} pageChange={pageChange} /> */}</div>;
+      // case 'Login':
+      //   return <div>aaa{/* <Login view={view} pageChange={pageChange} /> */}</div>;
       case 'UserRegistration':
         return (
           <div>

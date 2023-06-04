@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 export const ItemRegistration = (props) => {
-  const [itemName, setItemName] = useState("");
-  const [categoryNameId, setCategoryNameId] = useState("");
+  const { fetchServer, pageChange, fetchItem } = props;
+
+  const [itemName, setItemName] = useState('');
+  const [categoryNameId, setCategoryNameId] = useState('');
 
   const itemDataPost = async () => {
     //データベースにPOSTする処理
@@ -13,18 +15,18 @@ export const ItemRegistration = (props) => {
         accunt_id: 1,
         itemPhoto: null,
       };
-      const res = await fetch("http://localhost:8080/addItems", {
-        method: "POST",
+      const res = await fetch(`${fetchServer}/addItems`, {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       });
       const result = await res.text();
       console.log(result);
-      setItemName("");
-      if (result === "アイテム登録完了") {
-        props.fetchItem();
+      setItemName('');
+      if (result === 'アイテム登録完了') {
+        fetchItem();
       }
     } catch (error) {
       console.error(error);
@@ -47,11 +49,7 @@ export const ItemRegistration = (props) => {
     <>
       <div className="mainBrock">
         <label>カテゴリー</label>
-        <select
-          className="input"
-          onChange={handleCategoryNameChange}
-          defaultValue=""
-        >
+        <select className="input" onChange={handleCategoryNameChange} defaultValue="">
           <option value="" disabled>
             カテゴリーを選択してください
           </option>
@@ -71,7 +69,7 @@ export const ItemRegistration = (props) => {
       </div>
       <div className="bottomBrock">
         <button onClick={itemDataPost}>追加</button>
-        <button onClick={() => props.pageChange("ItemList")}>戻る</button>
+        <button onClick={() => pageChange('ItemList')}>戻る</button>
       </div>
     </>
   );

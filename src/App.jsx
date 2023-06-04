@@ -99,7 +99,11 @@ function App() {
       case 'ItemRegistration':
         return (
           <div>
-            <ItemRegistration view={view} pageChange={pageChange} fetchItem={fetchItem} />
+            <ItemRegistration
+              fetchServer={fetchServer}
+              pageChange={pageChange}
+              fetchItem={fetchItem}
+            />
           </div>
         );
       case 'BringList':

@@ -9,9 +9,7 @@ import { UserRegistration } from './components/UserRegistration';
 
 function App() {
   // const fetchServer = process.env.SERVER_URL ?? 'http://localhost:8080';
-  const fetchServer = process.env.SERVER_URL
-    ? 'https://sumgcampserver.onrender.com'
-    : 'http://localhost:8080';
+  const fetchServer = process.env.SERVER_URL;
 
   const [view, setView] = useState('ItemList');
   const pageChange = (name) => setView(name);

@@ -9,6 +9,7 @@ import { UserRegistration } from './components/UserRegistration';
 
 function App() {
   const fetchServer = 'https://sumgcampserver.onrender.com';
+  // process.envはサーバー側でしか使えないからクライアント側ではどうしたらいいのか？
   // const fetchServer = process.env.SERVER_URL ?? 'http://localhost:8080';
   // const fetchServer =
   //   process.env.NODE_ENV === 'production'
